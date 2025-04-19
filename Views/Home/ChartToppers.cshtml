@@ -1,0 +1,128 @@
+﻿@model List<OnlineMusicStore.Models.MusicItem>
+@{
+    ViewBag.Title = "🔥 Chart Toppers";
+}
+<!-- Internal Styling -->
+<style>
+    :root {
+        --primary-purple: #6a0dad;
+        --secondary-purple: #9b59b6;
+        --light-purple: #e6d5f5;
+        --hover-purple: #8e44ad;
+        --text-purple: #4a235a;
+    }
+
+    body {
+        background: linear-gradient(135deg, #f5f7fa 0%, #e6d5f5 100%);
+        font-family: 'Segoe UI', sans-serif;
+        min-height: 100vh;
+    }
+
+    .chart-header {
+        background: linear-gradient(45deg, var(--primary-purple), var(--secondary-purple));
+        color: white;
+        padding: 40px 20px;
+        border-radius: 15px;
+        text-align: center;
+        margin-bottom: 40px;
+        box-shadow: 0 10px 30px rgba(106, 13, 173, 0.15);
+    }
+
+        .chart-header h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+
+    .music-card {
+        border: none;
+        border-radius: 15px;
+        overflow: hidden;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        background: #ffffff;
+        box-shadow: 0 10px 30px rgba(106, 13, 173, 0.15);
+    }
+
+        .music-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(106, 13, 173, 0.2);
+        }
+
+        .music-card img {
+            height: 220px;
+            object-fit: cover;
+        }
+
+        .music-card .card-body {
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .music-card .card-title {
+            font-size: 1.25rem;
+            color: var(--primary-purple);
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .music-card .card-text {
+            font-size: 0.95rem;
+            color: #555;
+            margin-bottom: 1rem;
+        }
+
+        .music-card audio {
+            width: 100%;
+            border-radius: 10px;
+            background-color: #f8f9fa;
+            padding: 6px;
+        }
+
+    audio::-webkit-media-controls-panel {
+        background-color: var(--light-purple);
+    }
+
+    audio::-webkit-media-controls-play-button {
+        background-color: var(--primary-purple);
+        border-radius: 50%;
+    }
+
+    .music-container {
+        padding: 60px 0;
+    }
+</style>
+<!-- Header Banner -->
+<div class="music-container">
+    <div class="container">
+        <div class="chart-header">
+            <h2><i class="fas fa-fire me-2"></i>Chart Toppers</h2>
+            <p class="mb-0">The hottest music tracks dominating the scene right now. Stream your favorites below!</p>
+        </div>
+    </div>
+    <!-- Music Grid -->
+    <div class="container">
+        <div class="row">
+            @foreach (var item in Model)
+            {
+                <div class="col-md-6 col-lg-4 mb-4">
+                    <div class="card music-card h-100">
+                        <img class="card-img-top" src="@item.ImageUrl" alt="@item.Title" />
+                        <div class="card-body">
+                            <h5 class="card-title">@item.Title</h5>
+                            <p class="card-text">
+                                <strong>Artist:</strong> @item.Artist<br />
+                                <strong>Release:</strong> @item.ReleaseDate.ToShortDateString()
+                            </p>
+                            <audio controls>
+                                <source src="@item.MusicUrl" type="audio/mpeg" />
+                                Your browser does not support the audio element.
+                            </audio>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>

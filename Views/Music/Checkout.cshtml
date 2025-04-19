@@ -1,0 +1,29 @@
+﻿@{
+    ViewBag.Title = "Checkout";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2 class="mt-4">🛒 Checkout</h2>
+
+<div class="alert alert-info">
+    <p>Total Amount: ₹@string.Format("{0:0.00}", ViewBag.TotalAmount)</p>
+    <p>Select a payment method to complete your purchase:</p>
+</div>
+
+@using (Html.BeginForm("Checkout", "Music", FormMethod.Post))
+{
+    <div class="form-group">
+        <label for="paymentMethod">Select Payment Method:</label>
+        <select id="paymentMethod" name="paymentMethod" class="form-control" required>
+            <option value="CreditCard">Credit Card</option>
+            <option value="DebitCard">Debit Card</option>
+            <option value="PayPal">PayPal</option>
+        </select>
+    </div>
+
+    <button type="submit" class="btn btn-success mt-3">Complete Purchase</button>
+}
+
+<div class="mt-4">
+    <a href="@Url.Action("Cart", "Music")" class="btn btn-secondary">Back to Cart</a>
+</div>

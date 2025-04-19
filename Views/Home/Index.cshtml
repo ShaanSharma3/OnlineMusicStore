@@ -1,0 +1,216 @@
+﻿@model Dictionary<string, List<OnlineMusicStore.Models.MusicItem>>
+
+@{
+    ViewBag.Title = "Welcome to Online Music Store 🎵";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var topCharts = ViewBag.TopCharts as List<OnlineMusicStore.Models.MusicItem>;
+    var newReleases = ViewBag.NewReleases as List<OnlineMusicStore.Models.MusicItem>;
+    var wishlistItems = ViewBag.WishlistItems as List<int> ?? new List<int>();
+    var cartItems = ViewBag.CartItems as List<int> ?? new List<int>();
+    var cartQuantities = ViewBag.CartQuantities as Dictionary<int, int> ?? new Dictionary<int, int>();
+}
+
+<div class="container mt-4">
+
+    @* 🎯 Top Charts Section *@
+    @if (topCharts != null && topCharts.Any())
+    {
+        <h2 class="mb-4">🌟 Chart Toppers</h2>
+        <div class="row">
+            @foreach (var item in topCharts)
+            {
+                <div class="col-md-4 mb-4">
+                    <div class="card shadow-sm h-100">
+                        <img class="card-img-top" src="@item.ImageUrl" alt="@item.Title" style="height: 200px; object-fit: cover;" />
+                        <div class="card-body">
+                            <h5 class="card-title">@item.Title</h5>
+                            <p class="card-text"><strong>@item.Artist</strong></p>
+                            <p class="card-text"><strong>₹@string.Format("{0:0.00}", item.Price)</strong></p>
+
+                            <div class="mb-2">
+                                @if (Session["UserName"] != null)
+                                {
+                                    if (wishlistItems.Contains(item.Id))
+                                    {
+                                        <button class="btn btn-danger w-100 mb-2" disabled>
+                                            <i class="fas fa-heart"></i> In Wishlist
+                                        </button>
+                                    }
+                                    else
+                                    {
+                                        <a href="@Url.Action("AddToWishlist", "Music", new { id = item.Id })" class="btn btn-outline-danger w-100 mb-2">
+                                            <i class="far fa-heart"></i> Add to Wishlist
+                                        </a>
+                                    }
+
+                                    if (cartItems.Contains(item.Id))
+                                    {
+                                        <div class="d-flex align-items-center mt-1">
+                                            <button class="btn btn-primary me-2 flex-grow-1" disabled>
+                                                <i class="fas fa-shopping-cart"></i> In Cart
+                                            </button>
+                                            <span class="badge bg-secondary">
+                                                Qty: @cartQuantities[item.Id]
+                                            </span>
+                                            <a href="@Url.Action("AddToCart", "Music", new { id = item.Id })" class="btn btn-outline-secondary ms-2" title="Add one more">
+                                                <i class="fas fa-plus"></i>
+                                            </a>
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <a href="@Url.Action("AddToCart", "Music", new { id = item.Id })" class="btn btn-outline-primary w-100 mt-1">
+                                            <i class="fas fa-shopping-cart"></i> Add to Cart
+                                        </a>
+                                    }
+                                }
+                            </div>
+
+                            <audio controls style="width: 100%;">
+                                <source src="@item.MusicUrl" type="audio/mpeg" />
+                                Your browser does not support the audio element.
+                            </audio>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+
+    @* 🆕 New Releases Section *@
+    @if (newReleases != null && newReleases.Any())
+    {
+        <h2 class="mb-4">🆕 New Releases</h2>
+        <div class="row">
+            @foreach (var item in newReleases)
+            {
+                <div class="col-md-4 mb-4">
+                    <div class="card shadow-sm h-100">
+                        <img class="card-img-top" src="@item.ImageUrl" alt="@item.Title" style="height: 200px; object-fit: cover;" />
+                        <div class="card-body">
+                            <h5 class="card-title">@item.Title</h5>
+                            <p class="card-text"><strong>@item.Artist</strong></p>
+                            <p class="card-text"><strong>₹@string.Format("{0:0.00}", item.Price)</strong></p>
+
+                            <div class="mb-2">
+                                @if (Session["UserName"] != null)
+                                {
+                                    if (wishlistItems.Contains(item.Id))
+                                    {
+                                        <button class="btn btn-danger w-100 mb-2" disabled>
+                                            <i class="fas fa-heart"></i> In Wishlist
+                                        </button>
+                                    }
+                                    else
+                                    {
+                                        <a href="@Url.Action("AddToWishlist", "Music", new { id = item.Id })" class="btn btn-outline-danger w-100 mb-2">
+                                            <i class="far fa-heart"></i> Add to Wishlist
+                                        </a>
+                                    }
+
+                                    if (cartItems.Contains(item.Id))
+                                    {
+                                        <div class="d-flex align-items-center mt-1">
+                                            <button class="btn btn-primary me-2 flex-grow-1" disabled>
+                                                <i class="fas fa-shopping-cart"></i> In Cart
+                                            </button>
+                                            <span class="badge bg-secondary">
+                                                Qty: @cartQuantities[item.Id]
+                                            </span>
+                                            <a href="@Url.Action("AddToCart", "Music", new { id = item.Id })" class="btn btn-outline-secondary ms-2" title="Add one more">
+                                                <i class="fas fa-plus"></i>
+                                            </a>
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <a href="@Url.Action("AddToCart", "Music", new { id = item.Id })" class="btn btn-outline-primary w-100 mt-1">
+                                            <i class="fas fa-shopping-cart"></i> Add to Cart
+                                        </a>
+                                    }
+                                }
+                            </div>
+
+                            <audio controls style="width: 100%;">
+                                <source src="@item.MusicUrl" type="audio/mpeg" />
+                                Your browser does not support the audio tag.
+                            </audio>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+
+    @* 🎵 Music by Category Section *@
+    <h2 class="mb-4">🎶 Explore Music by Category</h2>
+
+    @foreach (var categoryGroup in Model)
+    {
+        <h3 class="mt-4">@categoryGroup.Key</h3>
+        <div class="row">
+            @foreach (var item in categoryGroup.Value)
+            {
+                <div class="col-md-4 mb-4">
+                    <div class="card shadow-sm h-100">
+                        <img class="card-img-top" src="@item.ImageUrl" alt="@item.Title" style="height: 200px; object-fit: cover;" />
+                        <div class="card-body">
+                            <h5 class="card-title">@item.Title</h5>
+                            <p class="card-text">
+                                <strong>Artist:</strong> @item.Artist<br />
+                                <strong>Album:</strong> @item.AlbumName<br />
+                                <strong>Release:</strong> @item.ReleaseDate.ToShortDateString()<br />
+                                <strong>Price:</strong> ₹@string.Format("{0:0.00}", item.Price)
+                            </p>
+
+                            <div class="mb-2">
+                                @if (Session["UserName"] != null)
+                                {
+                                    if (wishlistItems.Contains(item.Id))
+                                    {
+                                        <button class="btn btn-danger w-100 mb-2" disabled>
+                                            <i class="fas fa-heart"></i> In Wishlist
+                                        </button>
+                                    }
+                                    else
+                                    {
+                                        <a href="@Url.Action("AddToWishlist", "Music", new { id = item.Id })" class="btn btn-outline-danger w-100 mb-2">
+                                            <i class="far fa-heart"></i> Add to Wishlist
+                                        </a>
+                                    }
+
+                                    if (cartItems.Contains(item.Id))
+                                    {
+                                        <div class="d-flex align-items-center mt-1">
+                                            <button class="btn btn-primary me-2 flex-grow-1" disabled>
+                                                <i class="fas fa-shopping-cart"></i> In Cart
+                                            </button>
+                                            <span class="badge bg-secondary">
+                                                Qty: @cartQuantities[item.Id]
+                                            </span>
+                                            <a href="@Url.Action("AddToCart", "Music", new { id = item.Id })" class="btn btn-outline-secondary ms-2" title="Add one more">
+                                                <i class="fas fa-plus"></i>
+                                            </a>
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <a href="@Url.Action("AddToCart", "Music", new { id = item.Id })" class="btn btn-outline-primary w-100 mt-1">
+                                            <i class="fas fa-shopping-cart"></i> Add to Cart
+                                        </a>
+                                    }
+                                }
+                            </div>
+
+                            <audio controls style="width: 100%;">
+                                <source src="@item.MusicUrl" type="audio/mpeg" />
+                                Your browser does not support the audio tag.
+                            </audio>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+
+</div>

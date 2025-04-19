@@ -1,0 +1,179 @@
+﻿@model IEnumerable<OnlineMusicStore.Models.Comment>
+@{
+    ViewBag.Title = "All Comments";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+    :root {
+        --primary-purple: #8e44ad;
+        --secondary-purple: #b366d9;
+        --light-purple: #e6d5f5;
+        --hover-purple: #a055c0;
+        --text-purple: #d4bff9;
+        --purple-gradient: linear-gradient(45deg, var(--primary-purple), var(--secondary-purple));
+        --dark-background: #121212;
+        --dark-secondary: #1e1e1e;
+        --dark-component: #262626;
+        --light-text: #f1f1f1;
+        --secondary-text: #b3b3b3;
+    }
+
+    .gradient-container {
+        background: var(--dark-background);
+        min-height: 100vh;
+        padding: 0;
+        display: flex;
+        align-items: flex-start;
+        justify-content: center;
+        overflow-y: auto;
+    }
+
+    .feedback-wrapper {
+        background-color: var(--dark-secondary);
+        border-radius: 12px;
+        box-shadow: 0 8px 20px rgba(142, 68, 173, 0.2);
+        padding: 30px;
+        width: 95%;
+        max-width: 1000px;
+        margin: 60px auto; /* Gives space for scrolling top/bottom */
+    }
+
+    .feedback-header {
+        background: var(--purple-gradient);
+        color: white;
+        padding: 15px;
+        margin-bottom: 20px;
+        border-radius: 8px;
+        text-align: center;
+        box-shadow: 0 4px 10px rgba(142, 68, 173, 0.3);
+    }
+
+    .feedback-title {
+        color: var(--text-purple);
+        margin-bottom: 20px;
+        border-bottom: 2px solid var(--primary-purple);
+        padding-bottom: 10px;
+        display: inline-block;
+    }
+
+    .feedback-table {
+        width: 100%;
+        border-collapse: collapse;
+        background-color: var(--dark-component);
+        border-radius: 8px;
+        overflow: hidden;
+        box-shadow: 0 4px 8px rgba(142, 68, 173, 0.15);
+        color: var(--light-text);
+    }
+
+        .feedback-table th {
+            background: var(--purple-gradient);
+            color: white;
+            padding: 12px 15px;
+            text-align: left;
+        }
+
+        .feedback-table td {
+            padding: 12px 15px;
+            border-bottom: 1px solid rgba(142, 68, 173, 0.2);
+        }
+
+        .feedback-table tr:nth-child(even) {
+            background-color: rgba(30, 30, 30, 0.6);
+        }
+
+        .feedback-table tr:hover {
+            background-color: rgba(142, 68, 173, 0.15);
+        }
+
+    .feedback-empty {
+        background-color: var(--dark-component);
+        border-left: 4px solid var(--primary-purple);
+        color: var(--text-purple);
+        padding: 15px;
+        border-radius: 4px;
+        margin-top: 20px;
+    }
+
+    strong {
+        color: var(--text-purple);
+    }
+</style>
+
+<div class="gradient-container">
+    <div class="feedback-wrapper" id="feedbackWrapper">
+        <div class="feedback-header">
+            <h2>Customer Feedback</h2>
+            <p>See what our music lovers are saying</p>
+        </div>
+        <h3 class="feedback-title">All Feedbacks</h3>
+        @if (Model != null && Model.Any())
+        {
+            <table class="feedback-table">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Feedback</th>
+                        <th>Date Submitted</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var comment in Model)
+                    {
+                        <tr class="comment-row">
+                            <td><strong>@comment.Name</strong></td>
+                            <td>@comment.Content</td>
+                            <td>@comment.CreatedAt.ToString("MMM dd, yyyy hh:mm tt")</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+        else
+        {
+            <div class="feedback-empty">
+                No feedbacks available yet. Be the first to share your thoughts!
+            </div>
+        }
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Animate the feedback wrapper
+        const feedbackWrapper = document.getElementById('feedbackWrapper');
+        feedbackWrapper.style.opacity = '0';
+        feedbackWrapper.style.transform = 'translateY(20px)';
+
+        setTimeout(function() {
+            feedbackWrapper.style.transition = 'all 0.5s ease';
+            feedbackWrapper.style.opacity = '1';
+            feedbackWrapper.style.transform = 'translateY(0)';
+        }, 200);
+
+        // Animate table rows with staggered effect
+        const rows = document.querySelectorAll('.comment-row');
+        rows.forEach((row, index) => {
+            row.style.opacity = '0';
+            row.style.transform = 'translateY(10px)';
+
+            setTimeout(function() {
+                row.style.transition = 'all 0.3s ease';
+                row.style.opacity = '1';
+                row.style.transform = 'translateY(0)';
+            }, 300 + (index * 50));
+        });
+
+        // Add hover effect to table rows
+        rows.forEach(row => {
+            row.addEventListener('mouseenter', function() {
+                this.style.transition = 'all 0.2s ease';
+                this.style.backgroundColor = 'rgba(142, 68, 173, 0.15)';
+            });
+
+            row.addEventListener('mouseleave', function() {
+                this.style.backgroundColor = '';
+            });
+        });
+    });
+</script>

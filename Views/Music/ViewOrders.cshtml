@@ -1,0 +1,22 @@
+﻿@model List<OnlineMusicStore.Models.Order>
+
+<h2>All Orders</h2>
+
+@foreach (var order in Model)
+{
+    <div style="border: 1px solid #ccc; padding: 10px; margin-bottom: 20px;">
+        <strong>Order ID:</strong> @order.OrderId <br />
+        <strong>User:</strong> @order.User.FullName <br />
+        <strong>Date:</strong> @order.OrderDate.ToString("dd MMM yyyy") <br />
+        <strong>Total:</strong> ₹@order.TotalAmount <br />
+
+        <ul>
+            @foreach (var item in order.OrderItems)
+            {
+                <li>
+                    @item.MusicItem.Title - ₹@item.Price x @item.Quantity
+                </li>
+            }
+        </ul>
+    </div>
+}

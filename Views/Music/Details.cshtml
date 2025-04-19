@@ -1,0 +1,14 @@
+﻿@model OnlineMusicStore.Models.MusicItem
+
+<h2>@Model.Title</h2>
+
+<p><strong>Artist:</strong> @Model.Artist</p>
+<p><strong>Album:</strong> @Model.AlbumName</p>
+<p><strong>Category:</strong> @Model.Category</p>
+<p><strong>Release Date:</strong> @Model.ReleaseDate.ToShortDateString()</p>
+
+<img src="@Model.ImageUrl" width="150" />
+
+<audio controls style="width: 300px;">
+    <source src="@Model.MusicUrl" type="audio/mpeg" />
+</audio>

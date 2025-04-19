@@ -1,0 +1,51 @@
+﻿@{
+    ViewBag.Title = "Order Successful";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="card shadow-sm mb-4">
+    <div class="card-body text-center py-5">
+        <div class="animation-container mb-4">
+            <i class="fas fa-check-circle text-success" style="font-size: 5rem;"></i>
+        </div>
+        <h1 class="display-4">Thank You for Your Purchase!</h1>
+        <p class="lead text-muted">Your order has been successfully placed and is now being processed.</p>
+        <hr class="my-4">
+        <p>You will receive a confirmation email with your order details shortly.</p>
+        <div class="mt-4">
+            <a class="btn btn-primary btn-lg" href="@Url.Action("Index", "Home")">
+                <i class="fas fa-home"></i> Return to Home
+            </a>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-4">
+    <div class="col-md-4">
+        <div class="card shadow-sm h-100">
+            <div class="card-body text-center">
+                <i class="fas fa-download text-primary mb-3" style="font-size: 2.5rem;"></i>
+                <h4>Download Information</h4>
+                <p>Your purchased music will be available for download in your account within 24 hours.</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card shadow-sm h-100">
+            <div class="card-body text-center">
+                <i class="fas fa-credit-card text-success mb-3" style="font-size: 2.5rem;"></i>
+                <h4>Payment Confirmation</h4>
+                <p>Your payment has been processed successfully. The transaction details have been sent to your email.</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card shadow-sm h-100">
+            <div class="card-body text-center">
+                <i class="fas fa-headphones text-warning mb-3" style="font-size: 2.5rem;"></i>
+                <h4>Enjoy Your Music</h4>
+                <p>Thank you for shopping with us! We hope you enjoy your music selections.</p>
+            </div>
+        </div>
+    </div>
+</div>

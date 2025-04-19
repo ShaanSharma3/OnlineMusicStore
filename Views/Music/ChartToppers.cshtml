@@ -1,0 +1,30 @@
+﻿@model List<OnlineMusicStore.Models.MusicItem>
+
+@{
+    ViewBag.Title = "Chart Toppers";
+}
+
+<h2>🎶 Chart Toppers</h2>
+
+<div class="row">
+    @foreach (var item in Model)
+    {
+        <div class="col-md-4 mb-4">
+            <div class="card shadow-sm h-100">
+                <img class="card-img-top" src="@item.ImageUrl" alt="@item.Title" style="height: 200px; object-fit: cover;" />
+                <div class="card-body">
+                    <h5 class="card-title">@item.Title</h5>
+                    <p class="card-text">
+                        <strong>Artist:</strong> @item.Artist<br />
+                        <strong>Album:</strong> @item.AlbumName<br />
+                        <strong>Release:</strong> @item.ReleaseDate.ToShortDateString()
+                    </p>
+                    <audio controls style="width: 100%;">
+                        <source src="@item.MusicUrl" type="audio/mpeg" />
+                        Your browser does not support the audio tag.
+                    </audio>
+                </div>
+            </div>
+        </div>
+    }
+</div>

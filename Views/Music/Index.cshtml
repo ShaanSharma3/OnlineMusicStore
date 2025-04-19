@@ -1,0 +1,227 @@
+﻿@model IEnumerable<OnlineMusicStore.Models.MusicItem>
+@{
+    ViewBag.Title = "All Music";
+}
+
+<style>
+    :root {
+        --primary-color: #8e44ad;
+        --secondary-color: #b366d9;
+        --light-purple: #e6d5f5;
+        --hover-purple: #a055c0;
+        --text-purple: #d4bff9;
+        --dark-bg: #121212;
+        --dark-secondary: #1e1e1e;
+        --dark-component: #262626;
+        --light-text: #f1f1f1;
+        --secondary-text: #b3b3b3;
+    }
+
+    body {
+        background-color: var(--dark-bg);
+        color: var(--light-text);
+    }
+
+    h2 {
+        color: var(--text-purple);
+        border-bottom: 2px solid var(--primary-color);
+        padding-bottom: 10px;
+        margin-bottom: 20px;
+        font-weight: 600;
+        text-shadow: 0 0 10px rgba(142, 68, 173, 0.3);
+    }
+
+    .button-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-gap: 20px;
+        margin-bottom: 30px;
+        max-width: 650px;
+    }
+
+    .btn {
+        display: block;
+        text-align: center;
+        padding: 12px 15px;
+        font-size: 15px;
+        border-radius: 6px;
+        font-weight: 500;
+        letter-spacing: 0.5px;
+        transition: all 0.25s ease;
+        margin: 0;
+        height: 50px;
+        line-height: 25px;
+        text-decoration: none;
+        border: 2px solid;
+    }
+
+    .btn-info, .btn-primary, .btn-success {
+        background-color: var(--primary-color);
+        border-color: var(--secondary-color);
+        color: var(--light-text);
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15);
+    }
+
+        .btn-info:hover, .btn-primary:hover, .btn-success:hover {
+            background-color: var(--hover-purple);
+            border-color: var(--light-purple);
+            color: var(--light-text);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+        }
+
+    .btn-danger {
+        background-color: #d35400;
+        border-color: #e67e22;
+        color: var(--light-text);
+    }
+
+        .btn-danger:hover {
+            background-color: #c0392b;
+            border-color: #e74c3c;
+            color: white;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+    .table {
+        background-color: black;
+        color: var(--light-text);
+        border: 2px solid var(--primary-color);
+        border-radius: 10px;
+        overflow: hidden;
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+        margin-top: 10px;
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+    .table-dark th {
+        font-weight: 600;
+        letter-spacing: 0.7px;
+        padding: 15px;
+        border-bottom: 2px solid var(--primary-color);
+        text-transform: uppercase;
+        font-size: 14px;
+    }
+
+    .table td {
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+        padding: 15px;
+        font-weight: 500;
+        text-shadow: 0 0 1px rgba(0, 0, 0, 0.5);
+    }
+
+    img {
+        border-radius: 8px;
+        border: 2px solid var(--primary-color);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        display: block;
+    }
+
+    .btn-sm {
+        padding: 6px 12px;
+        font-size: 13px;
+        border-radius: 4px;
+        display: inline-block;
+        margin: 0 3px;
+        height: auto;
+        min-width: 60px;
+        line-height: normal;
+    }
+
+    .action-buttons {
+        white-space: nowrap;
+    }
+
+    .audio-btn {
+        background-color: var(--primary-color);
+        color: white;
+        border: none;
+        padding: 8px 12px;
+        border-radius: 8px;
+        cursor: pointer;
+        font-size: 14px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        transition: 0.3s;
+    }
+
+        .audio-btn:hover {
+            background-color: var(--hover-purple);
+        }
+</style>
+
+<h2 class="mb-3">🎵 All Music Items</h2>
+
+<div class="button-grid">
+    <a href="@Url.Action("Index", "Comment")" class="btn btn-info">See All Feedbacks</a>
+    <a href="@Url.Action("Users", "Admin")" class="btn btn-info">Manage Users</a>
+    <a href="@Url.Action("ViewOrders", "Admin")" class="btn btn-info">
+        <i class="fas fa-eye"></i> View All Orders
+    </a>
+
+    <a href="@Url.Action("Create", "Music")" class="btn btn-success">➕ Add New Music</a>
+</div>
+
+<table class="table table-bordered">
+    <thead class="table-dark">
+        <tr>
+            <th>Image</th>
+            <th>Title</th>
+            <th>Artist</th>
+            <th>Category</th>
+            <th>Price</th>
+            <th>Audio</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            var audioId = "audio_" + item.Id;
+            var btnId = "btn_" + item.Id;
+            <tr>
+                <td><img src="@item.ImageUrl" width="80" /></td>
+                <td>@item.Title</td>
+                <td>@item.Artist</td>
+                <td>@item.Category</td>
+                <td>@item.Price</td>
+                <td>
+                    <audio id="@audioId" style="display:none;">
+                        <source src="@item.MusicUrl" type="audio/mpeg" />
+                    </audio>
+                    <button class="audio-btn" onclick="toggleAudio('@audioId', '@btnId')" id="@btnId">▶️ Play</button>
+                </td>
+                <td class="action-buttons">
+                    @Html.ActionLink("Edit", "Edit", new { id = item.Id }, new { @class = "btn btn-primary btn-sm" }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.Id }, new { @class = "btn btn-danger btn-sm" })
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<script>
+    function toggleAudio(audioId, btnId) {
+        const audio = document.getElementById(audioId);
+        const btn = document.getElementById(btnId);
+
+        // Pause all other audios
+        document.querySelectorAll("audio").forEach(a => {
+            if (a.id !== audioId) {
+                a.pause();
+                a.currentTime = 0;
+                const btn = document.getElementById("btn_" + a.id.split('_')[1]);
+                if (btn) btn.innerText = "▶️ Play";
+            }
+        });
+
+        if (audio.paused) {
+            audio.play();
+            btn.innerText = "⏸️ Pause";
+        } else {
+            audio.pause();
+            btn.innerText = "▶️ Play";
+        }
+    }
+</script>

@@ -1,0 +1,86 @@
+﻿@model IEnumerable<OnlineMusicStore.Models.MusicItem>
+@{
+    ViewBag.Title = "Search Results";
+}
+
+<div class="container">
+    <div class="row mb-4">
+        <div class="col-12">
+            <h2 class="text-center text-purple mb-4">Search Results for "@ViewBag.SearchTerm"</h2>
+
+            <!-- Search form for the results page -->
+            <div class="col-md-6 mx-auto mb-4">
+                <form action="@Url.Action("Search", "Music")" method="get">
+                    <div class="input-group">
+                        <input class="form-control" type="search" name="searchTerm" value="@ViewBag.SearchTerm"
+                               placeholder="Search music..." aria-label="Search">
+                        <button class="btn btn-purple" type="submit">
+                            <i class="fas fa-search"></i> Search
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    @if (Model.Any())
+    {
+        <div class="row row-cols-1 row-cols-md-3 row-cols-lg-4 g-4">
+            @foreach (var item in Model)
+            {
+                <div class="col">
+                    <div class="card h-100">
+                        <img src="@item.ImageUrl" class="card-img-top" alt="@item.Title">
+                        <div class="card-body">
+                            <h5 class="card-title text-purple">@item.Title</h5>
+                            <p class="card-text">@item.Artist</p>
+                            <p class="card-text text-muted small">Album: @item.AlbumName</p>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <span class="text-purple fw-bold">$@item.Price.ToString("F2")</span>
+                                <div>
+                                    @if (Session["UserId"] != null)
+                                    {
+                                        <a href="@Url.Action("AddToWishlist", "Music", new { id = item.Id })" class="btn btn-sm btn-outline-secondary me-1">
+                                            <i class="far fa-heart"></i>
+                                        </a>
+                                        <a href="@Url.Action("AddToCart", "Music", new { id = item.Id })" class="btn btn-sm btn-purple">
+                                            <i class="fas fa-shopping-cart"></i> Add
+                                        </a>
+                                    }
+                                    else
+                                    {
+                                        <a href="@Url.Action("Login", "Account")" class="btn btn-sm btn-purple">
+                                            <i class="fas fa-sign-in-alt"></i> Login to Buy
+                                        </a>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+    else
+    {
+        <div class="row">
+            <div class="col-md-8 mx-auto">
+                <div class="card">
+                    <div class="card-body text-center">
+                        <i class="fas fa-search fa-4x text-purple mb-3"></i>
+                        <h4>No results found for "@ViewBag.SearchTerm"</h4>
+                        <p class="text-muted">Try searching with different keywords or browse our categories.</p>
+                        <div class="mt-4">
+                            <a href="@Url.Action("ChartToppers", "Music")" class="btn btn-purple me-2">
+                                <i class="fas fa-chart-line"></i> Chart Toppers
+                            </a>
+                            <a href="@Url.Action("NewReleases", "Music")" class="btn btn-purple">
+                                <i class="fas fa-compact-disc"></i> New Releases
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>

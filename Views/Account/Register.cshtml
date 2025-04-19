@@ -1,0 +1,530 @@
+﻿@model OnlineMusicStore.Models.User
+@{
+    ViewBag.Title = "Register";
+}
+
+<div class="register-container">
+    <div class="register-card">
+        <div class="register-header">
+            <h2>Create Account</h2>
+            <p class="subtitle">Join our music community</p>
+        </div>
+        <div class="register-body">
+            @using (Html.BeginForm(null, null, FormMethod.Post, new { @class = "register-form" }))
+            {
+                @Html.AntiForgeryToken()
+                <div class="form-steps">
+                    <div class="step-indicator">
+                        <div class="step active" data-step="1">
+                            <div class="step-icon">1</div>
+                            <div class="step-label">Personal</div>
+                        </div>
+                        <div class="step" data-step="2">
+                            <div class="step-icon">2</div>
+                            <div class="step-label">Account</div>
+                        </div>
+                        <div class="step-line"></div>
+                    </div>
+
+                    <div class="step-content">
+                        <div class="step-pane active" data-step="1">
+                            <div class="form-floating mb-4">
+                                @Html.TextBoxFor(m => m.FullName, new { @class = "form-control custom-input", placeholder = "Full Name", id = "fullName" })
+                                @Html.LabelFor(m => m.FullName, new { @for = "fullName" })
+                                <div class="focus-border"></div>
+                                <div class="input-icon">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person" viewBox="0 0 16 16">
+                                        <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10z" />
+                                    </svg>
+                                </div>
+                            </div>
+
+                            <div class="form-floating mb-4">
+                                @Html.TextBoxFor(m => m.Address, new { @class = "form-control custom-input", placeholder = "Address", id = "address" })
+                                @Html.LabelFor(m => m.Address, new { @for = "address" })
+                                <div class="focus-border"></div>
+                                <div class="input-icon">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-geo-alt" viewBox="0 0 16 16">
+                                        <path d="M12.166 8.94c-.524 1.062-1.234 2.12-1.96 3.07A31.493 31.493 0 0 1 8 14.58a31.481 31.481 0 0 1-2.206-2.57c-.726-.95-1.436-2.008-1.96-3.07C3.304 7.867 3 6.862 3 6a5 5 0 0 1 10 0c0 .862-.305 1.867-.834 2.94zM8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10z" />
+                                        <path d="M8 8a2 2 0 1 1 0-4 2 2 0 0 1 0 4zm0 1a3 3 0 1 0 0-6 3 3 0 0 0 0 6z" />
+                                    </svg>
+                                </div>
+                            </div>
+
+                            <div class="step-buttons">
+                                <button type="button" class="btn next-btn" data-next="2">
+                                    <span>Continue</span>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-right" viewBox="0 0 16 16">
+                                        <path fill-rule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z" />
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="step-pane" data-step="2">
+                            <div class="form-floating mb-4">
+                                @Html.TextBoxFor(m => m.Email, new { @class = "form-control custom-input", placeholder = "Email", id = "email", type = "email" })
+                                @Html.LabelFor(m => m.Email, new { @for = "email" })
+                                <div class="focus-border"></div>
+                                <div class="input-icon">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-envelope" viewBox="0 0 16 16">
+                                        <path d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V4Zm2-1a1 1 0 0 0-1 1v.217l7 4.2 7-4.2V4a1 1 0 0 0-1-1H2Zm13 2.383-4.708 2.825L15 11.105V5.383Zm-.034 6.876-5.64-3.471L8 9.583l-1.326-.795-5.64 3.47A1 1 0 0 0 2 13h12a1 1 0 0 0 .966-.741ZM1 11.105l4.708-2.897L1 5.383v5.722Z" />
+                                    </svg>
+                                </div>
+                            </div>
+
+                            <div class="form-floating mb-4">
+                                <input type="password" name="PasswordHash" class="form-control custom-input" required placeholder="Password" id="password" />
+                                <label for="password">Password</label>
+                                <div class="focus-border"></div>
+                                <div class="input-icon">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-lock" viewBox="0 0 16 16">
+                                        <path d="M8 1a2 2 0 0 1 2 2v4H6V3a2 2 0 0 1 2-2zm3 6V3a3 3 0 0 0-6 0v4a2 2 0 0 0-2 2v5a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2zM5 8h6a1 1 0 0 1 1 1v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V9a1 1 0 0 1 1-1z" />
+                                    </svg>
+                                </div>
+                            </div>
+
+                            <div class="form-check mb-4">
+                                <input class="form-check-input" type="checkbox" id="termsCheck" required>
+                                <label class="form-check-label" for="termsCheck">
+                                    I agree to the <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a>
+                                </label>
+                            </div>
+
+                            <div class="step-buttons">
+                                <button type="button" class="btn back-btn" data-prev="1">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-left" viewBox="0 0 16 16">
+                                        <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z" />
+                                    </svg>
+                                    <span>Back</span>
+                                </button>
+                                <button type="submit" class="btn submit-btn">
+                                    <span>Create Account</span>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check-circle" viewBox="0 0 16 16">
+                                        <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
+                                        <path d="M10.97 4.97a.235.235 0 0 0-.02.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-1.071-1.05z" />
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+        <div class="register-footer">
+            <p>Already have an account? <a href="@Url.Action("Login")">Login</a></p>
+        </div>
+    </div>
+</div>
+
+<style>
+    :root {
+        /* Primary Colors */
+        --primary-purple: #8e44ad;
+        --secondary-purple: #b366d9;
+        --light-purple: #e6d5f5;
+        --hover-purple: #a055c0;
+        --text-purple: #d4bff9;
+
+        /* Dark Theme */
+        --dark-bg: #121212;
+        --dark-secondary: #1e1e1e;
+        --dark-component: #262626;
+        --light-text: #f1f1f1;
+        --secondary-text: #b3b3b3;
+
+        --shadow-color: rgba(142, 68, 173, 0.3);
+        --border-color: #3a3a3a;
+        --error-color: #ef4444;
+        --success-color: #10b981;
+    }
+
+    body {
+        background-color: var(--dark-bg);
+        font-family: 'Inter', 'Segoe UI', Roboto, sans-serif;
+        color: var(--light-text);
+    }
+
+    .register-container {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 2rem;
+        background: linear-gradient(135deg, var(--dark-bg) 0%, var(--dark-secondary) 100%);
+    }
+
+    .register-card {
+        width: 100%;
+        max-width: 550px;
+        background-color: var(--dark-component);
+        border-radius: 16px;
+        box-shadow: 0 25px 50px -12px var(--shadow-color);
+        overflow: hidden;
+        position: relative;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .register-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 30px 60px -15px var(--shadow-color);
+    }
+
+    .register-header {
+        padding: 2.5rem 2.5rem 1.5rem;
+        text-align: center;
+        background: linear-gradient(45deg, var(--primary-purple), var(--secondary-purple));
+        color: var(--light-text);
+        border-bottom-left-radius: 60% 15%;
+        border-bottom-right-radius: 60% 15%;
+    }
+
+    .register-header h2 {
+        margin-bottom: 0.5rem;
+        font-weight: 700;
+        font-size: 1.75rem;
+    }
+
+    .subtitle {
+        color: rgba(255, 255, 255, 0.85);
+        margin-bottom: 0;
+    }
+
+    .register-body {
+        padding: 2.5rem;
+    }
+
+    .step-indicator {
+        display: flex;
+        justify-content: space-between;
+        position: relative;
+        margin-bottom: 2rem;
+    }
+
+    .step-line {
+        position: absolute;
+        top: 20px;
+        left: 50px;
+        right: 50px;
+        height: 2px;
+        background-color: var(--border-color);
+        z-index: 1;
+    }
+
+    .step {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        position: relative;
+        z-index: 2;
+    }
+
+    .step-icon {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background-color: var(--dark-secondary);
+        border: 2px solid var(--border-color);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 600;
+        color: var(--secondary-text);
+        transition: all 0.3s ease;
+        margin-bottom: 0.5rem;
+    }
+
+    .step.active .step-icon {
+        background-color: var(--primary-purple);
+        border-color: var(--secondary-purple);
+        color: var(--light-text);
+        box-shadow: 0 0 0 5px rgba(142, 68, 173, 0.2);
+    }
+
+    .step-label {
+        font-size: 0.875rem;
+        color: var(--secondary-text);
+        font-weight: 500;
+    }
+
+    .step.active .step-label {
+        color: var(--text-purple);
+        font-weight: 600;
+    }
+
+    .register-form .form-floating {
+        position: relative;
+    }
+
+    .custom-input {
+        border: none;
+        border-bottom: 2px solid var(--border-color);
+        border-radius: 0;
+        box-shadow: none !important;
+        padding: 1rem 2.5rem 1rem 0.75rem;
+        font-size: 1rem;
+        background-color: transparent;
+        transition: border-color 0.25s ease;
+        color: var(--light-text);
+    }
+
+    .custom-input:focus {
+        border-color: var(--primary-purple);
+    }
+
+    .focus-border {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 0;
+        height: 2px;
+        background-color: var(--primary-purple);
+        transition: width 0.4s ease;
+    }
+
+    .custom-input:focus ~ .focus-border {
+        width: 100%;
+    }
+
+    .form-floating > label {
+        padding: 1rem 0.75rem;
+        color: var(--secondary-text);
+    }
+
+    .input-icon {
+        position: absolute;
+        right: 10px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: var(--text-purple);
+    }
+
+    .step-pane {
+        display: none;
+    }
+
+    .step-pane.active {
+        display: block;
+    }
+
+    .step-buttons {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 2rem;
+    }
+
+    .next-btn, .submit-btn {
+        background: linear-gradient(135deg, var(--primary-purple), var(--secondary-purple));
+        color: var(--light-text);
+        padding: 0.75rem 1.5rem;
+        border-radius: 8px;
+        border: none;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+        z-index: 1;
+    }
+
+    .next-btn::before, .submit-btn::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.2), transparent);
+        transition: all 0.4s ease;
+        z-index: -1;
+    }
+
+    .next-btn:hover, .submit-btn:hover {
+        background: linear-gradient(135deg, var(--secondary-purple), var(--hover-purple));
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    }
+
+    .next-btn:hover::before, .submit-btn:hover::before {
+        left: 100%;
+    }
+
+    .next-btn svg, .submit-btn svg {
+        transition: transform 0.3s ease;
+    }
+
+    .next-btn:hover svg {
+        transform: translateX(4px);
+    }
+
+    .submit-btn {
+        background: linear-gradient(135deg, var(--primary-purple), var(--secondary-purple));
+    }
+
+    .submit-btn:hover {
+        background: linear-gradient(135deg, var(--hover-purple), var(--primary-purple));
+    }
+
+    .back-btn {
+        background-color: transparent;
+        color: var(--secondary-text);
+        padding: 0.75rem 1.5rem;
+        border-radius: 8px;
+        border: 1px solid var(--border-color);
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        transition: all 0.3s ease;
+    }
+
+    .back-btn:hover {
+        background-color: rgba(142, 68, 173, 0.1);
+        color: var(--text-purple);
+        border-color: var(--primary-purple);
+    }
+
+    .back-btn svg {
+        transition: transform 0.3s ease;
+    }
+
+    .back-btn:hover svg {
+        transform: translateX(-4px);
+    }
+
+    .form-check-input {
+        width: 1.125rem;
+        height: 1.125rem;
+        margin-top: 0.25rem;
+        background-color: var(--dark-secondary);
+        border-color: var(--border-color);
+    }
+
+    .form-check-input:checked {
+        background-color: var(--primary-purple);
+        border-color: var(--secondary-purple);
+    }
+
+    .form-check-label {
+        font-size: 0.875rem;
+        padding-left: 0.25rem;
+        color: var(--secondary-text);
+    }
+
+    .form-check-label a {
+        color: var(--text-purple);
+        text-decoration: none;
+        font-weight: 600;
+        transition: color 0.2s;
+    }
+
+    .form-check-label a:hover {
+        color: var(--secondary-purple);
+        text-decoration: underline;
+    }
+
+    .register-footer {
+        text-align: center;
+        padding: 1.5rem;
+        border-top: 1px solid var(--border-color);
+        color: var(--secondary-text);
+        font-size: 0.875rem;
+    }
+
+    .register-footer a {
+        color: var(--text-purple);
+        font-weight: 600;
+        text-decoration: none;
+        transition: color 0.2s;
+    }
+
+    .register-footer a:hover {
+        color: var(--secondary-purple);
+        text-decoration: underline;
+    }
+
+    @*@media (max-width: 576px) {
+        .register-card {
+            border-radius: 12px;
+        }
+
+        .register-header {
+            padding: 2rem 1.5rem 1rem;
+        }
+
+        .register-body {
+            padding: 1.5rem;
+        }
+
+        .step-buttons {
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .back-btn {
+            order: 2;
+        }
+
+        .next-btn, .submit-btn {
+            order: 1;
+        }
+
+        .register-footer {
+            padding: 1rem;
+        }*@
+    }
+</style>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        // Step navigation
+        const nextButtons = document.querySelectorAll('.next-btn');
+        const backButtons = document.querySelectorAll('.back-btn');
+        const steps = document.querySelectorAll('.step');
+        const stepPanes = document.querySelectorAll('.step-pane');
+
+        nextButtons.forEach(button => {
+            button.addEventListener('click', function () {
+                const nextStep = this.getAttribute('data-next');
+
+                // Hide all panes
+                stepPanes.forEach(pane => {
+                    pane.classList.remove('active');
+                });
+
+                // Show target pane
+                document.querySelector(`.step-pane[data-step="${nextStep}"]`).classList.add('active');
+
+                // Update step indicators
+                steps.forEach(step => {
+                    if (parseInt(step.getAttribute('data-step')) <= parseInt(nextStep)) {
+                        step.classList.add('active');
+                    }
+                });
+            });
+        });
+
+        backButtons.forEach(button => {
+            button.addEventListener('click', function () {
+                const prevStep = this.getAttribute('data-prev');
+
+                // Hide all panes
+                stepPanes.forEach(pane => {
+                    pane.classList.remove('active');
+                });
+
+                // Show target pane
+                document.querySelector(`.step-pane[data-step="${prevStep}"]`).classList.add('active');
+
+                // Update step indicators
+                steps.forEach(step => {
+                    if (parseInt(step.getAttribute('data-step')) > parseInt(prevStep)) {
+                        step.classList.remove('active');
+                    }
+                });
+            });
+        });
+    });
+</script>

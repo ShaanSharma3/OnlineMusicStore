@@ -1,0 +1,69 @@
+﻿@model OnlineMusicStore.Models.MusicItem
+
+@{
+    ViewBag.Title = "✏️ Edit Music Item";
+}
+
+<h2>✏️ Edit Music Item</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+<div class="form-horizontal">
+    <hr />
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Title)
+        @Html.TextBoxFor(model => model.Title, new { @class = "form-control" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Artist)
+        @Html.TextBoxFor(model => model.Artist, new { @class = "form-control" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.AlbumName)
+        @Html.TextBoxFor(model => model.AlbumName, new { @class = "form-control" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Category)
+        @Html.TextBoxFor(model => model.Category, new { @class = "form-control" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.ImageUrl)
+        @Html.TextBoxFor(model => model.ImageUrl, new { @class = "form-control" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.MusicUrl)
+        @Html.TextBoxFor(model => model.MusicUrl, new { @class = "form-control" })
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.Price)
+        @Html.TextBoxFor(model => model.Price, new { @class = "form-control", type = "number", step = "0.01" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.ReleaseDate)
+        @Html.TextBoxFor(model => model.ReleaseDate, "{0:yyyy-MM-dd}", new { @class = "form-control", type = "date" })
+    </div>
+
+    <div class="form-check">
+        @Html.CheckBoxFor(model => model.IsChartTopper, new { @class = "form-check-input" })
+        @Html.LabelFor(model => model.IsChartTopper, new { @class = "form-check-label" })
+    </div>
+
+    <div class="form-check">
+        @Html.CheckBoxFor(model => model.IsNewRelease, new { @class = "form-check-input" })
+        @Html.LabelFor(model => model.IsNewRelease, new { @class = "form-check-label" })
+    </div>
+
+    <button type="submit" class="btn btn-success">Save</button>
+    <a href="@Url.Action("Index")" class="btn btn-secondary">Back</a>
+</div>
+}

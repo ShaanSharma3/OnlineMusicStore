@@ -1,0 +1,182 @@
+﻿@model OnlineMusicStore.Models.Comment
+
+@{
+    ViewBag.Title = "Leave a Comment";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    :root {
+        --primary-purple: #8e44ad;
+        --secondary-purple: #b366d9;
+        --light-purple: #e6d5f5;
+        --hover-purple: #a055c0;
+        --text-purple: #d4bff9;
+        --purple-gradient: linear-gradient(45deg, var(--primary-purple), var(--secondary-purple));
+        --dark-background: #121212;
+        --dark-secondary: #1e1e1e;
+        --dark-component: #262626;
+        --light-text: #f1f1f1;
+        --secondary-text: #b3b3b3;
+    }
+
+    .bg-purple {
+        background-color: var(--primary-purple) !important;
+    }
+
+    .text-purple {
+        color: var(--text-purple) !important;
+    }
+
+    .btn-purple {
+        background: var(--purple-gradient);
+        border-color: var(--primary-purple);
+        color: white;
+        transition: all 0.3s ease;
+    }
+
+        .btn-purple:hover {
+            background: var(--purple-gradient);
+            border-color: var(--hover-purple);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(142, 68, 173, 0.3);
+        }
+
+    .form-control {
+        background-color: var(--dark-secondary);
+        border-color: var(--dark-component);
+        color: var(--light-text);
+    }
+
+        .form-control:focus {
+            border-color: var(--secondary-purple);
+            box-shadow: 0 0 0 0.25rem rgba(179, 102, 217, 0.25);
+            background-color: var(--dark-secondary);
+            color: var(--light-text);
+        }
+
+    .form-label {
+        color: var(--text-purple);
+    }
+
+    .feedback-container {
+        background: var(--dark-background);
+        min-height: 100vh;
+        padding: 60px 0;
+    }
+
+    .feedback-card {
+        border: none;
+        border-radius: 15px;
+        overflow: hidden;
+        box-shadow: 0 10px 30px rgba(142, 68, 173, 0.2);
+        transition: all 0.3s ease;
+        background-color: var(--dark-secondary);
+    }
+
+        .feedback-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(142, 68, 173, 0.3);
+        }
+
+    .feedback-header {
+        background: var(--purple-gradient);
+        padding: 25px 20px;
+    }
+
+    .feedback-title {
+        font-size: 1.8rem;
+        letter-spacing: 1px;
+        color: white;
+        text-align: center;
+        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    }
+
+    ::placeholder {
+        color: var(--secondary-text);
+        opacity: 0.7;
+    }
+
+    .alert-success {
+        background-color: #28a745;
+        color: white;
+        padding: 10px 15px;
+        border-radius: 8px;
+        margin-top: 15px;
+        box-shadow: 0 4px 12px rgba(40, 167, 69, 0.2);
+        text-align: center;
+    }
+</style>
+
+<div class="feedback-container d-flex align-items-center">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-6 col-lg-5">
+                <div class="feedback-card" id="commentCard">
+                    <div class="feedback-header">
+                        <h2 class="feedback-title">Leave a Comment</h2>
+                    </div>
+                    <div class="card-body p-4">
+                        @if (TempData["SuccessMessage"] != null)
+                        {
+                            <div class="alert-success">
+                                @TempData["SuccessMessage"]
+                            </div>
+                        }
+
+                        @using (Html.BeginForm("Create", "Comment", FormMethod.Post))
+                        {
+                            @Html.AntiForgeryToken()
+
+                            <div class="mb-3">
+                                <label class="form-label text-purple">Name</label>
+                                @Html.TextBoxFor(m => m.Name, new { @class = "form-control", placeholder = "Your name", required = "required" })
+                                @Html.ValidationMessageFor(m => m.Name, "", new { @class = "text-danger" })
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label text-purple">Comment</label>
+                                @Html.TextAreaFor(m => m.Content, new { @class = "form-control", placeholder = "Write your comment here...", rows = 5, required = "required" })
+                                @Html.ValidationMessageFor(m => m.Content, "", new { @class = "text-danger" })
+                            </div>
+
+                            <div class="d-grid">
+                                <button type="submit" class="btn btn-purple">Submit</button>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+   
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const commentCard = document.getElementById('commentCard');
+            commentCard.style.opacity = '0';
+            commentCard.style.transform = 'translateY(20px)';
+
+            setTimeout(function () {
+                commentCard.style.transition = 'all 0.5s ease';
+                commentCard.style.opacity = '1';
+                commentCard.style.transform = 'translateY(0)';
+            }, 200);
+
+            const formFields = document.querySelectorAll('.form-control');
+            formFields.forEach(field => {
+                field.addEventListener('focus', function () {
+                    this.style.transition = 'all 0.3s ease';
+                    this.style.boxShadow = '0 0 0 0.25rem rgba(179, 102, 217, 0.25)';
+                });
+
+                field.addEventListener('blur', function () {
+                    this.style.boxShadow = 'none';
+                });
+            });
+        });
+    </script>
+}

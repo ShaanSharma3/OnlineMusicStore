@@ -1,0 +1,110 @@
+﻿@model List<OnlineMusicStore.Models.CartItem>
+@{
+    ViewBag.Title = "Payment";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="card shadow-sm mb-4">
+    <div class="card-header bg-info text-white">
+        <h2 class="mb-0"><i class="fas fa-credit-card"></i> Payment Information</h2>
+    </div>
+    <div class="card-body">
+        @if (ViewBag.ErrorMessage != null)
+        {
+            <div class="alert alert-danger">
+                <i class="fas fa-exclamation-triangle me-2"></i> @ViewBag.ErrorMessage
+            </div>
+        }
+
+        <div class="row">
+            <div class="col-lg-7">
+                <div class="card shadow-sm mb-4">
+                    <div class="card-header bg-dark text-white">
+                        <h5 class="mb-0"><i class="fas fa-lock"></i> Secure Payment</h5>
+                    </div>
+                    <div class="card-body">
+                        @using (Html.BeginForm("Checkout", "Music", FormMethod.Post, new { @class = "needs-validation" }))
+                        {
+                            @Html.AntiForgeryToken()
+                            <div class="mb-3">
+                                <label for="CardNumber" class="form-label">Card Number</label>
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="fas fa-credit-card"></i></span>
+                                    <input type="text" id="CardNumber" name="CardNumber" class="form-control" required placeholder="1234 5678 9012 3456" />
+                                </div>
+                                <small class="text-muted">Enter the 16-digit number on your card</small>
+                            </div>
+                            <div class="mb-3">
+                                <label for="CardHolder" class="form-label">Cardholder Name</label>
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="fas fa-user"></i></span>
+                                    <input type="text" id="CardHolder" name="CardHolder" class="form-control" required placeholder="John Doe" />
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label for="ExpirationDate" class="form-label">Expiration Date</label>
+                                        <input type="month" id="ExpirationDate" name="ExpirationDate" class="form-control" required />
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label for="CVC" class="form-label">CVC/CVV</label>
+                                        <div class="input-group">
+                                            <span class="input-group-text"><i class="fas fa-lock"></i></span>
+                                            <input type="text" id="CVC" name="CVC" class="form-control" required placeholder="123" maxlength="4" />
+                                        </div>
+                                        <small class="text-muted">3 or 4 digits on the back of your card</small>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="d-grid gap-2">
+                                <button type="submit" class="btn btn-primary btn-lg">
+                                    <i class="fas fa-check-circle"></i> Complete Purchase
+                                </button>
+                                <a href="@Url.Action("BuyNow", "Music")" class="btn btn-outline-secondary">
+                                    <i class="fas fa-arrow-left"></i> Back to Order Summary
+                                </a>
+                            </div>
+                        }
+                    </div>
+                  
+                </div>
+            </div>
+            <div class="col-lg-5">
+                <div class="card shadow-sm mb-4">
+                    <div class="card-header bg-dark text-white">
+                        <h5 class="mb-0"><i class="fas fa-shopping-basket"></i> Order Summary</h5>
+                    </div>
+                    <div class="card-body">
+                        <ul class="list-group mb-3">
+                            @foreach (var item in Model)
+                            {
+                                <li class="list-group-item d-flex justify-content-between lh-sm">
+                                    <div>
+                                        <h6 class="my-0">@item.MusicItem.Title</h6>
+                                        <small class="text-muted">@item.MusicItem.Artist</small>
+                                    </div>
+                                    <span class="text-muted">₹@string.Format("{0:0.00}", item.MusicItem.Price) x @item.Quantity</span>
+                                </li>
+                            }
+                            <li class="list-group-item d-flex justify-content-between">
+                                <span>Total (INR)</span>
+                                <strong>₹@string.Format("{0:0.00}", ViewBag.TotalAmount)</strong>
+                            </li>
+                        </ul>
+                        <div class="card bg-light">
+                            <div class="card-body">
+                                <p class="mb-0 text-dark">
+                                    <i class="fas fa-shield-alt text-success"></i>
+                                    Your payment information is encrypted and secure.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,484 @@
+﻿@model IEnumerable<OnlineMusicStore.Models.User>
+@{
+    ViewBag.Title = "Manage Users";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    :root {
+        --primary-purple: #8e44ad;
+        --secondary-purple: #b366d9;
+        --light-purple: #e6d5f5;
+        --hover-purple: #a055c0;
+        --text-purple: #d4bff9;
+        --purple-gradient: linear-gradient(45deg, var(--primary-purple), var(--secondary-purple));
+        --dark-background: #121212;
+        --dark-secondary: #1e1e1e;
+        --dark-component: #262626;
+        --light-text: #f1f1f1;
+        --secondary-text: #b3b3b3;
+    }
+
+    .bg-purple {
+        background-color: var(--primary-purple) !important;
+    }
+
+    .bg-light-purple {
+        background-color: var(--dark-component) !important;
+    }
+
+    .text-purple {
+        color: var(--text-purple) !important;
+    }
+
+    .btn-purple {
+        background: var(--purple-gradient);
+        border-color: var(--primary-purple);
+        color: white;
+    }
+
+        .btn-purple:hover, .btn-purple:focus, .btn-purple:active {
+            background: var(--purple-gradient);
+            border-color: var(--hover-purple);
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(142, 68, 173, 0.3);
+        }
+
+    .btn-outline-purple {
+        color: var(--text-purple);
+        border-color: var(--primary-purple);
+        background-color: transparent;
+    }
+
+        .btn-outline-purple:hover {
+            background-color: var(--primary-purple);
+            color: white;
+        }
+
+    .page-link {
+        color: var(--primary-purple);
+        background-color: var(--dark-component);
+        border-color: var(--dark-secondary);
+    }
+
+    .page-item.active .page-link {
+        background-color: var(--primary-purple);
+        border-color: var(--primary-purple);
+    }
+
+    .admin-container {
+        background-color: var(--dark-background);
+        min-height: 100vh;
+        padding: 30px 0;
+    }
+
+    .admin-card {
+        border: none;
+        border-radius: 15px;
+        overflow: hidden;
+        box-shadow: 0 5px 25px rgba(142, 68, 173, 0.2);
+        transition: all 0.3s ease;
+        background-color: var(--dark-secondary);
+    }
+
+        .admin-card:hover {
+            box-shadow: 0 8px 35px rgba(142, 68, 173, 0.25);
+        }
+
+    .admin-header {
+        background: var(--purple-gradient);
+        padding: 20px;
+        border-bottom: none;
+    }
+
+    .admin-title {
+        font-size: 1.8rem;
+        letter-spacing: 0.5px;
+        text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    }
+
+    .table-custom {
+        border-collapse: separate;
+        border-spacing: 0;
+        color: var(--light-text);
+    }
+
+        .table-custom thead {
+            background-color: var(--dark-component);
+        }
+
+        .table-custom th {
+            color: var(--text-purple);
+            font-weight: 600;
+            border-top: none;
+            padding: 15px;
+        }
+
+        .table-custom tbody tr {
+            transition: all 0.2s ease;
+        }
+
+            .table-custom tbody tr:hover {
+                background-color: rgba(142, 68, 173, 0.1);
+            }
+
+        .table-custom td {
+            padding: 15px;
+            vertical-align: middle;
+            border-color: var(--dark-component);
+        }
+
+    .badge-role {
+        padding: 6px 12px;
+        font-weight: 500;
+        border-radius: 30px;
+    }
+
+    .badge-admin {
+        background: linear-gradient(45deg, #8e44ad, #9b59b6);
+        color: white;
+    }
+
+    .badge-staff {
+        background: linear-gradient(45deg, #7d3c98, #884ea0);
+        color: white;
+    }
+
+    .badge-user {
+        background-color: var(--dark-component);
+        color: var(--text-purple);
+        border: 1px solid var(--primary-purple);
+    }
+
+    .search-box {
+        border-radius: 30px;
+        padding: 10px 20px;
+        border: 1px solid var(--dark-component);
+        box-shadow: 0 2px 10px rgba(142, 68, 173, 0.1);
+        transition: all 0.3s ease;
+        background-color: var(--dark-component);
+        color: var(--light-text);
+    }
+
+        .search-box:focus {
+            border-color: var(--secondary-purple);
+            box-shadow: 0 5px 15px rgba(142, 68, 173, 0.3);
+            outline: none;
+        }
+
+    .action-btn {
+        width: 36px;
+        height: 36px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        margin: 0 3px;
+        transition: all 0.2s ease;
+    }
+
+        .action-btn:hover {
+            transform: translateY(-3px);
+        }
+
+    .action-btn-delete {
+        color: #e74c3c;
+        border-color: #e74c3c;
+    }
+
+        .action-btn-delete:hover {
+            background-color: #e74c3c;
+            color: white;
+        }
+
+    .filter-panel {
+        background-color: var(--dark-component);
+        border-radius: 10px;
+        padding: 15px;
+        box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+        margin-bottom: 20px;
+        color: var(--light-text);
+    }
+
+    .form-control, .form-select {
+        background-color: var(--dark-secondary);
+        border-color: var(--dark-component);
+        color: var(--light-text);
+    }
+
+        .form-select option {
+            background-color: var(--dark-secondary);
+            color: var(--light-text);
+        }
+
+    .form-label {
+        color: var(--text-purple);
+    }
+
+    .input-group-text {
+        background-color: var(--dark-component);
+        border-color: var(--dark-secondary);
+        color: var(--text-purple);
+    }
+
+    .alert-success {
+        background-color: rgba(46, 204, 113, 0.2);
+        border-color: rgba(46, 204, 113, 0.3);
+        color: #2ecc71;
+    }
+
+    .text-muted {
+        color: var(--secondary-text) !important;
+    }
+
+    a {
+        color: var(--text-purple);
+    }
+
+        a:hover {
+            color: var(--secondary-purple);
+        }
+
+    .btn-outline-secondary {
+        border-color: var(--dark-component);
+        color: var(--secondary-text);
+    }
+
+        .btn-outline-secondary:hover {
+            background-color: var(--dark-component);
+            color: var(--light-text);
+        }
+
+    .btn-light {
+        background-color: var(--dark-component);
+        border-color: var(--dark-secondary);
+        color: var(--light-text);
+    }
+
+        .btn-light:hover {
+            background-color: var(--dark-secondary);
+            border-color: var(--dark-component);
+            color: var(--text-purple);
+        }
+</style>
+
+<div class="admin-container">
+    <div class="container-fluid">
+        <div class="row mb-4">
+            <div class="col">
+                <div class="admin-card">
+                    <div class="admin-header d-flex justify-content-between align-items-center">
+                        <h2 class="admin-title text-white mb-0">
+                            <i class="fas fa-users me-2"></i> User Management
+                        </h2>
+                        
+                    </div>
+
+                    <div class="collapse" id="filterPanel">
+                        <div class="filter-panel">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="mb-3">
+                                        <label class="form-label text-purple"><i class="fas fa-user-tag me-1"></i> Role</label>
+                                        <select class="form-select" id="roleFilter">
+                                            <option value="">All Roles</option>
+                                            <option value="Admin">Admin</option>
+                                            <option value="Staff">Staff</option>
+                                            <option value="User">User</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="mb-3">
+                                        <label class="form-label text-purple"><i class="fas fa-sort me-1"></i> Sort By</label>
+                                        <select class="form-select" id="sortBy">
+                                            <option value="name">Name</option>
+                                            <option value="email">Email</option>
+                                            <option value="role">Role</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="mb-3">
+                                        <label class="form-label text-purple"><i class="fas fa-sort-amount-down me-1"></i> Order</label>
+                                        <select class="form-select" id="orderBy">
+                                            <option value="asc">Ascending</option>
+                                            <option value="desc">Descending</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="text-end">
+                                <button type="button" class="btn btn-purple">Apply Filters</button>
+                                <button type="button" class="btn btn-outline-secondary ms-2">Reset</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card-body">
+                        @if (TempData["SuccessMessage"] != null)
+                        {
+                            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                <i class="fas fa-check-circle me-2"></i>@TempData["SuccessMessage"]
+                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                            </div>
+                        }
+
+                        <div class="mb-4">
+                            <div class="input-group">
+                                <span class="input-group-text bg-light-purple">
+                                    <i class="fas fa-search text-purple"></i>
+                                </span>
+                                <input type="text" class="form-control search-box" id="searchUsers" placeholder="Search by name, email, or role...">
+                            </div>
+                        </div>
+
+                        <div class="table-responsive">
+                            <table class="table table-custom" id="usersTable">
+                                <thead>
+                                    <tr>
+                                        <th><i class="fas fa-hashtag me-1"></i>ID</th>
+                                        <th><i class="fas fa-user me-1"></i>Full Name</th>
+                                        <th><i class="fas fa-envelope me-1"></i>Email</th>
+                                        <th><i class="fas fa-map-marker-alt me-1"></i>Address</th>
+                                        <th><i class="fas fa-user-tag me-1"></i>Role</th>
+                                        <th class="text-center"><i class="fas fa-cogs me-1"></i>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var user in Model)
+                                    {
+                                        <tr>
+                                            <td>@user.Id</td>
+                                            <td class="fw-bold text-purple">@user.FullName</td>
+                                            <td><a href="mailto:@user.Email" class="text-decoration-none">@user.Email</a></td>
+                                            <td>@user.Address</td>
+                                            <td>
+                                                @if (user.Role == "Admin")
+                                                {
+                                                    <span class="badge badge-role badge-admin">
+                                                        <i class="fas fa-user-shield me-1"></i> @user.Role
+                                                    </span>
+                                                }
+                                                else if (user.Role == "Staff")
+                                                {
+                                                    <span class="badge badge-role badge-staff">
+                                                        <i class="fas fa-user-tie me-1"></i> @user.Role
+                                                    </span>
+                                                }
+                                                else
+                                                {
+                                                    <span class="badge badge-role badge-user">
+                                                        <i class="fas fa-user me-1"></i> @user.Role
+                                                    </span>
+                                                }
+                                            </td>
+                                            <td class="text-center">
+                                                <div class="btn-group" role="group">
+                                                    @using (Html.BeginForm("RemoveUser", "Admin", FormMethod.Post, new { @class = "d-inline" }))
+                                                    {
+                                                        @Html.Hidden("id", user.Id)
+                                                        <button type="submit" class="btn btn-outline-secondary action-btn action-btn-delete"
+                                                                data-bs-toggle="tooltip" title="Delete User"
+                                                                onclick="return confirm('Are you sure you want to delete @user.FullName?');">
+                                                            <i class="fas fa-trash-alt"></i>
+                                                        </button>
+                                                    }
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div class="d-flex justify-content-between align-items-center mt-4">
+                            <div class="text-muted">
+                                Showing <span class="fw-bold">@Model.Count()</span> users
+                            </div>
+                            <nav aria-label="Page navigation">
+                                <ul class="pagination pagination-sm">
+                                    <li class="page-item disabled">
+                                        <a class="page-link" href="#" tabindex="-1"><i class="fas fa-chevron-left"></i></a>
+                                    </li>
+                                    <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                                    <li class="page-item">
+                                        <a class="page-link" href="#"><i class="fas fa-chevron-right"></i></a>
+                                    </li>
+                                </ul>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        // Initialize tooltips
+        var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+        var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+            return new bootstrap.Tooltip(tooltipTriggerEl)
+        });
+
+        // Search functionality
+        document.getElementById('searchUsers').addEventListener('keyup', function () {
+            let input = this.value.toLowerCase();
+            let rows = document.querySelectorAll("#usersTable tbody tr");
+
+            rows.forEach(row => {
+                let text = row.textContent.toLowerCase();
+                row.style.display = text.includes(input) ? "" : "none";
+            });
+        });
+
+        // Role filter functionality
+        document.getElementById('roleFilter').addEventListener('change', function () {
+            let selectedRole = this.value.toLowerCase();
+            let rows = document.querySelectorAll("#usersTable tbody tr");
+
+            if (selectedRole === '') {
+                rows.forEach(row => {
+                    row.style.display = "";
+                });
+                return;
+            }
+
+            rows.forEach(row => {
+                let roleCell = row.querySelector("td:nth-child(5)").textContent.toLowerCase();
+                row.style.display = roleCell.includes(selectedRole) ? "" : "none";
+            });
+        });
+
+        // Add animation
+        document.addEventListener('DOMContentLoaded', function () {
+            const adminCard = document.querySelector('.admin-card');
+            adminCard.style.opacity = '0';
+            adminCard.style.transform = 'translateY(20px)';
+
+            setTimeout(function () {
+                adminCard.style.transition = 'all 0.5s ease';
+                adminCard.style.opacity = '1';
+                adminCard.style.transform = 'translateY(0)';
+            }, 200);
+
+            // Animate table rows
+            const rows = document.querySelectorAll('#usersTable tbody tr');
+            rows.forEach((row, index) => {
+                row.style.opacity = '0';
+                row.style.transform = 'translateY(10px)';
+
+                setTimeout(function () {
+                    row.style.transition = 'all 0.3s ease';
+                    row.style.opacity = '1';
+                    row.style.transform = 'translateY(0)';
+                }, 300 + (index * 50));
+            });
+        });
+    </script>
+}

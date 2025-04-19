@@ -1,0 +1,350 @@
+﻿@{
+    ViewBag.Title = "Login";
+}
+
+<div class="login-container">
+    <div class="login-card">
+        <div class="login-header">
+            <h2>Welcome Back</h2>
+            <p class="subtitle">Sign in to your Melody Haven account</p>
+        </div>
+        <div class="login-body">
+            @using (Html.BeginForm(null, null, FormMethod.Post, new { @class = "animated-form" }))
+            {
+                @Html.AntiForgeryToken()
+                <div class="form-floating mb-4 position-relative">
+                    <input type="email" name="email" class="form-control custom-input" id="email" required placeholder="name@example.com" />
+                    <label for="email">Email Address</label>
+                    <span class="focus-border"></span>
+                    <div class="input-icon">
+                        <i class="bi bi-envelope"></i>
+                    </div>
+                </div>
+                <div class="form-floating mb-4 position-relative">
+                    <input type="password" name="password" class="form-control custom-input" id="password" required placeholder="Password" />
+                    <label for="password">Password</label>
+                    <span class="focus-border"></span>
+                    <div class="input-icon">
+                        <i class="bi bi-lock"></i>
+                    </div>
+                </div>
+
+                if (ViewBag.Error != null)
+                {
+                    <div class="error-message">
+                        <i class="bi bi-exclamation-circle"></i>
+                        <span>@ViewBag.Error</span>
+                    </div>
+                }
+
+                <div class="remember-forgot">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="rememberMe">
+                        <label class="form-check-label" for="rememberMe">Remember me</label>
+                    </div>
+                    <a href="#" class="forgot-link">Forgot password?</a>
+                </div>
+
+                <button type="submit" class="btn login-btn d-flex align-items-center justify-content-center gap-2">
+                    <span class="highlight-login">Login</span>
+                    <i class="bi bi-arrow-right"></i>
+                </button>
+            }
+
+            <div class="social-login">
+                <p>Or sign in with</p>
+                <div class="social-icons">
+                    <a href="#" class="social-icon google"><i class="bi bi-google"></i></a>
+                    <a href="#" class="social-icon facebook"><i class="bi bi-facebook"></i></a>
+                    <a href="#" class="social-icon spotify"><i class="bi bi-spotify"></i></a>
+                </div>
+            </div>
+
+            <div class="login-footer centered-footer">
+                <p>Don't have an account? <a href="@Url.Action("Register")">Sign up</a></p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    :root {
+        --primary-purple: #8e44ad;
+        --secondary-purple: #b366d9;
+        --light-purple: #e6d5f5;
+        --hover-purple: #a055c0;
+        --text-purple: #d4bff9;
+        --dark-bg: #121212;
+        --dark-secondary: #1e1e1e;
+        --dark-component: #262626;
+        --light-text: #f1f1f1;
+        --secondary-text: #b3b3b3;
+        --error-color: #ef4444;
+        --card-bg: #262626;
+        --border-color: #444;
+    }
+
+    body {
+        font-family: 'Poppins', sans-serif;
+        background-color: var(--dark-bg);
+        color: var(--light-text);
+    }
+
+    .login-container {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 2rem;
+        background: linear-gradient(135deg, #121212 0%, #2c1e33 100%);
+    }
+
+    .login-card {
+        width: 100%;
+        max-width: 450px;
+        background-color: var(--card-bg);
+        border-radius: 16px;
+        box-shadow: 0 25px 50px -12px rgba(142, 68, 173, 0.3);
+        overflow: hidden;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .login-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 30px 60px -15px rgba(142, 68, 173, 0.4);
+    }
+
+    .login-header {
+        padding: 2.5rem 2.5rem 1.5rem;
+        text-align: center;
+        background: linear-gradient(45deg, var(--primary-purple), var(--secondary-purple));
+        color: white;
+        border-bottom-left-radius: 60% 15%;
+        border-bottom-right-radius: 60% 15%;
+    }
+
+    .login-header h2 {
+        margin-bottom: 0.5rem;
+        font-weight: 700;
+        font-size: 1.75rem;
+    }
+
+    .subtitle {
+        color: rgba(255, 255, 255, 0.85);
+    }
+
+    .login-body {
+        padding: 2.5rem;
+    }
+
+    .form-floating {
+        position: relative;
+    }
+
+    .custom-input {
+        border: none;
+        border-bottom: 2px solid var(--border-color);
+        border-radius: 0;
+        background-color: var(--dark-secondary);
+        padding: 1rem 2.5rem 1rem 0.75rem;
+        font-size: 1rem;
+        width: 100%;
+        transition: border-color 0.3s ease;
+        box-shadow: none;
+        color: var(--light-text);
+    }
+
+    .custom-input:focus {
+        border-color: var(--primary-purple);
+        outline: none;
+        background-color: var(--dark-secondary);
+        color: var(--light-text);
+        box-shadow: none;
+    }
+
+    .focus-border {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        height: 2px;
+        width: 0;
+        background-color: var(--primary-purple);
+        transition: width 0.4s ease;
+    }
+
+    .custom-input:focus + label + .focus-border,
+    .custom-input:focus ~ .focus-border {
+        width: 100%;
+    }
+
+    .form-floating > label {
+        padding: 1rem 0.75rem;
+        color: var(--secondary-text);
+    }
+
+    .input-icon {
+        position: absolute;
+        right: 10px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: var(--secondary-text);
+    }
+
+    .remember-forgot {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 1.5rem;
+        font-size: 0.875rem;
+        color: var(--secondary-text);
+    }
+
+    .forgot-link {
+        color: var(--secondary-purple);
+        text-decoration: none;
+        transition: color 0.2s ease;
+    }
+
+    .forgot-link:hover {
+        color: var(--primary-purple);
+    }
+
+    .highlight-login {
+        font-weight: 700;
+        color: #ffffff;
+        font-size: 1.1rem;
+    }
+
+    .login-btn {
+        width: 100%;
+        padding: 0.75rem 1rem;
+        background: linear-gradient(45deg, var(--primary-purple), var(--secondary-purple));
+        color: white;
+        font-size: 1rem;
+        font-weight: 600;
+        border: none;
+        border-radius: 8px;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 10px rgba(142, 68, 173, 0.3);
+    }
+
+    .login-btn:hover {
+        background: linear-gradient(45deg, var(--hover-purple), var(--secondary-purple));
+        box-shadow: 0 6px 15px rgba(142, 68, 173, 0.4);
+        transform: translateY(-2px);
+    }
+
+    .login-btn i {
+        transition: transform 0.3s ease;
+    }
+
+    .login-btn:hover i {
+        transform: translateX(4px);
+    }
+
+    .centered-footer {
+        text-align: center;
+        margin-top: 2rem;
+        font-size: 0.95rem;
+        color: var(--secondary-text);
+    }
+
+    .centered-footer a {
+        color: var(--secondary-purple);
+        font-weight: 600;
+        text-decoration: none;
+    }
+
+    .centered-footer a:hover {
+        color: var(--primary-purple);
+        text-decoration: underline;
+    }
+
+    .social-login {
+        text-align: center;
+        margin-top: 2rem;
+        position: relative;
+    }
+
+    .social-login p {
+        position: relative;
+        color: var(--secondary-text);
+        margin-bottom: 1rem;
+    }
+
+    .social-login p:before,
+    .social-login p:after {
+        content: "";
+        position: absolute;
+        top: 50%;
+        width: 25%;
+        height: 1px;
+        background-color: var(--border-color);
+    }
+
+    .social-login p:before {
+        left: 0;
+    }
+
+    .social-login p:after {
+        right: 0;
+    }
+
+    .social-icons {
+        display: flex;
+        justify-content: center;
+        gap: 1rem;
+        margin-top: 0.5rem;
+    }
+
+    .social-icon {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 40px;
+        height: 40px;
+        font-size: 1.25rem;
+        color: var(--light-text);
+        background-color: rgba(142, 68, 173, 0.2);
+        border-radius: 50%;
+        transition: all 0.3s ease;
+    }
+
+    .social-icon:hover {
+        transform: scale(1.1);
+        background-color: var(--primary-purple);
+        color: white;
+    }
+
+    .error-message {
+        color: var(--error-color);
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        margin-bottom: 1rem;
+        font-size: 0.9rem;
+        background-color: rgba(239, 68, 68, 0.1);
+        padding: 0.75rem;
+        border-radius: 8px;
+    }
+
+    @*@media (max-width: 576px) {
+        .login-card {
+            border-radius: 12px;
+        }
+
+        .login-header {
+            padding: 2rem 1.5rem 1rem;
+        }
+
+        .login-body {
+            padding: 1.5rem;
+        }
+
+        .remember-forgot {
+            flex-direction: column;
+            gap: 0.5rem;
+            align-items: flex-start;
+        }*@
+    }
+</style>
