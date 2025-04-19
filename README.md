@@ -38,13 +38,15 @@ The **Online Music Store** is a full-featured ASP.NET MVC 5 web application wher
 ## ⚙️ Setup Instructions
 
 1. Clone the repository
-git clone https://github.com/yourusername/OnlineMusicStore.git
+   git clone https://github.com/yourusername/OnlineMusicStore.git
 
 2. Open the project in Visual Studio 2019
 
-3.Update the connection string in Web.config to match your local SQL Server setup.
+3. Update the connection string
+   Modify the Web.config file to match your local SQL Server setup.
 
-4. Run the application using Visual Studio (IIS Express or your local server).
+4. Run the application
+   Launch it using Visual Studio (IIS Express or your preferred server).
 
 💾 The database will be created automatically using Entity Framework Code First Migrations.
 
@@ -52,5 +54,5 @@ git clone https://github.com/yourusername/OnlineMusicStore.git
 
 ```bash
 👤 Author
-Shaan – Software Developer
+Shaan Sharma
 📧 Email: shaansharma417@email.com
