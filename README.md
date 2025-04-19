@@ -26,12 +26,13 @@ The **Online Music Store** is a full-featured ASP.NET MVC 5 web application wher
 
 ## 🛠️ Technologies Used
 
-- **ASP.NET MVC 5**
-- **Entity Framework 6 (Code First)**
-- **SQL Server 2019**
+- **ASP.NET MVC**
+- **Entity Framework**
+- **SQL Server**
 - **Bootstrap 4 / Custom Dark Purple Theme**
-- **Visual Studio 2019**
+- **Visual Studio**
 - **LINQ & Razor Views**
+
 
 ---
 
