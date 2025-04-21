@@ -1,0 +1,37 @@
+## Ignore Visual Studio files
+.vs/
+*.user
+*.suo
+
+## Ignore build results
+bin/
+obj/
+*.exe
+*.dll
+*.pdb
+
+## Ignore packages
+packages/
+*.nupkg
+
+## Ignore user-specific files
+*.user
+*.rsuser
+*.suo
+
+## Ignore Web.config.user
+Web.config.user
+
+## Ignore database files
+*.mdf
+*.ldf
+
+## Ignore publish folder
+publish/
+
+## Ignore logs
+*.log
+
+## Ignore ReSharper files
+_ReSharper*/
+*.DotSettings.user
